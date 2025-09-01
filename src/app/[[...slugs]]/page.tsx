@@ -13,8 +13,6 @@ import {
 import { notFound } from 'next/navigation'
 import { getStoryblokApi } from '@storyblok/react/rsc'
 import { StoryblokStory } from '@storyblok/react/rsc'
-// Parsing: uncomment the lines below to perform runtime validation of the story content
-// import { parseContent } from '@/content'
 
 const resolveRelations = ['teamMembers.teamMembers']
 
