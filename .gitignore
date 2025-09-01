@@ -52,3 +52,4 @@ certificates
 *.njsproj
 *.sln
 *.sw?
+.env
