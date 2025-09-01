@@ -11,7 +11,7 @@ import {
   withDefault,
 } from 'pure-parse'
 import { notFound } from 'next/navigation'
-import { getStoryblokApi } from '@storyblok/react/rsc'
+import { getStoryblokApi, apiPlugin, storyblokInit } from '@storyblok/react/rsc'
 import { StoryblokStory } from '@storyblok/react/rsc'
 
 const resolveRelations = ['teamMembers.teamMembers']
@@ -35,7 +35,31 @@ const getStory = async (
   slugs: string[],
   bridgeSearchParams: BridgeSearchParams,
 ) => {
+  // Ensure Storyblok is initialized before making API calls
+  const accessToken = process.env.STORYBLOK_DELIVERY_API_TOKEN
+  
+  if (!accessToken) {
+    throw new Error(
+      'STORYBLOK_DELIVERY_API_TOKEN is not defined. Please set this environment variable with your Storyblok Delivery API token.'
+    )
+  }
+
+  storyblokInit({
+    accessToken,
+    use: [apiPlugin],
+    apiOptions: {
+      region: 'eu',
+      endpoint: process.env.STORYBLOK_API_BASE_URL
+        ? `${new URL(process.env.STORYBLOK_API_BASE_URL).origin}/v2`
+        : undefined,
+    },
+  })
+
   const client = getStoryblokApi()
+  
+  if (!client) {
+    throw new Error('Failed to initialize Storyblok API client')
+  }
 
   return await client
     .get(`cdn/stories/${getStoryPath(slugs, bridgeSearchParams)}`, {
