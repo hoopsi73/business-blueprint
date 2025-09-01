@@ -9,7 +9,7 @@ import Card from '../storyblok/Card'
 import Button from '../storyblok/Button'
 import { apiPlugin, storyblokInit } from '@storyblok/react/rsc'
 
-export const getStoryblokApi = () => {
+export const initializeStoryblok = () => {
   const accessToken = process.env.STORYBLOK_DELIVERY_API_TOKEN
   
   if (!accessToken) {
@@ -18,7 +18,7 @@ export const getStoryblokApi = () => {
     )
   }
 
-  return storyblokInit({
+  storyblokInit({
     accessToken,
     use: [apiPlugin],
     components: {

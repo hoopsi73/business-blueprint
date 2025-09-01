@@ -1,6 +1,6 @@
 'use client'
 
-import { getStoryblokApi } from '@/lib/storyblok'
+import { initializeStoryblok } from '@/lib/storyblok'
 import { ReactNode } from 'react'
 
 export default function StoryblokProvider({
@@ -8,6 +8,6 @@ export default function StoryblokProvider({
 }: {
   children: ReactNode
 }) {
-  getStoryblokApi()
+  initializeStoryblok()
   return children
 }
